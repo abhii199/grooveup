@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { prismaClient } from '../lib/db';
 
 
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
 		const extractedId = data.url.split("?v=")[1];
 
 		await prismaClient.stream.create({
-			dats: {
+			data: {
 				userId: data.createrId,
 				url: data.url,
 				extractedId,
@@ -38,4 +38,18 @@ export async function POST(req: NextRequest) {
 		}, {status: 411})
 	}
 
+}
+
+
+export async function  GET(req: NextRequest) {
+	const createrId = req.nextUrl.searchParams.get("createrId");
+	const streams = await prismaClient.user.findMany({
+		where: {
+			userId: createrId ?? ''
+		}
+	})
+
+	return NextResponse.json({
+		streams
+	})
 }

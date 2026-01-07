@@ -7,7 +7,7 @@ export function Navbar() {
 	return (
 		<div>
 			<div className=" flex justify-between m-4">
-				<div>Muzi</div>
+				<div>Groove Up</div>
 				<div>
 					{session.data?.user && (
 						<button
