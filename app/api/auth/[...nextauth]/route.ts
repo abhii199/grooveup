@@ -11,9 +11,9 @@ const handler = NextAuth({
 	callbacks: {
 		async signIn(params) {
 			
+			return true;
 		}
 
-		//return true;
 	}
 });
 

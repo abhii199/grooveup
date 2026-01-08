@@ -11,6 +11,7 @@ export async function POST(req: NextRequest) {
 
     const session = await getServerSession();
 
+    //replace email check with id check later
     if (!session?.user?.email) {
         return NextResponse.json({
             message: "Unauthenticated"
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
 // You can rid of DB call
     const user = await prismaClient.user.findFirst({
         where: {
-            email: session?.user?.email?? ""
+            email: session?.user?.email ?? ""
         }
     })
 

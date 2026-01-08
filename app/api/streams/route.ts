@@ -4,7 +4,7 @@ import { prismaClient } from '../lib/db';
 
 
 const YT_REGEX = new RegExp("?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?|shorts)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11}")
-
+//spotify regex can be added later
 const CreateStreamSchema = z.object({
 	createrId: z.string(),
 	url: z.string() //contain only youtube or spotify url
@@ -12,6 +12,7 @@ const CreateStreamSchema = z.object({
 
 export async function POST(req: NextRequest) {
 	try {
+		//add rate limiting here cause a single user cant flood the stream
 		const data = CreateStreamSchema.parse(await req.json());
 		
 		const isYt = YT_REGEX.test(data.url)
