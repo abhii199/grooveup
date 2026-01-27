@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { prismaClient } from '../lib/db';
 
 
-const YT_REGEX = new RegExp("?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?|shorts)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11}")
+const YT_REGEX = /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:m\.)?(?:youtu(?:be)?\.com\/(?:v\/|embed\/|watch(?:\/|\?v=))|youtu\.be\/)((?:\w|-){11})(?:\S+)?$/
 //spotify regex can be added later
 const CreateStreamSchema = z.object({
 	createrId: z.string(),
@@ -24,7 +24,13 @@ export async function POST(req: NextRequest) {
 
 		const extractedId = data.url.split("?v=")[1];
 
-		await prismaClient.stream.create({
+		const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${process.env.YTAPI}&part=snippet&id=${extractedId}`)
+		const json = await res.json()
+
+		console.log(json.items?.[0]?.snippet?.title)
+		console.log(json.items?.[0]?.snippet.thumbnails)
+
+		const stream = await prismaClient.stream.create({
 			data: {
 				userId: data.createrId,
 				url: data.url,
@@ -33,6 +39,7 @@ export async function POST(req: NextRequest) {
 
 			}
 		})
+		return NextResponse.json({sucess: true, id: stream.id, message: "Added Stream by the user"}, {status: 201})
 	} catch(e) {
 		return NextResponse.json({
 			message: "Error in creating stream",
@@ -44,7 +51,7 @@ export async function POST(req: NextRequest) {
 
 export async function  GET(req: NextRequest) {
 	const createrId = req.nextUrl.searchParams.get("createrId");
-	const streams = await prismaClient.user.findMany({
+	const streams = await prismaClient.stream.findMany({
 		where: {
 			userId: createrId ?? ''
 		}
@@ -52,5 +59,7 @@ export async function  GET(req: NextRequest) {
 
 	return NextResponse.json({
 		streams
+	},{
+		status: 200
 	})
 }
