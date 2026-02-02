@@ -1,3 +1,4 @@
+import { FeaturesSection } from './components/Features';
 import Footer from './components/Footer';
 import { HeroSection } from './components/Hero-section';
 import { Navbar } from './components/Navbar';
@@ -9,6 +10,7 @@ export default function Home() {
 			<Navbar /> 
 			<HeroSection />
 			<PartnersSection />
+			<FeaturesSection />
 			<Footer />
 		</main>
 	);
