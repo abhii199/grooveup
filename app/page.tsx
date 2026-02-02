@@ -1,3 +1,4 @@
+import { CTASection } from './components/CTA';
 import { FeaturesSection } from './components/Features';
 import Footer from './components/Footer';
 import { HeroSection } from './components/Hero-section';
@@ -15,6 +16,7 @@ export default function Home() {
 			<FeaturesSection />
 			<WorkflowSection />
 			<QueueSection />
+			<CTASection />
 			<Footer />
 		</main>
 	);
