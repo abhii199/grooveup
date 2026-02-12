@@ -57,19 +57,20 @@ const Footer = () => {
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="https://x.com/_abhii199"
+              href="https://x.com/_abhii199" target='_blank'
+
               className="text-sm text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110 transform"
               >
               Twitter
             </Link>
             <Link
-              href="https://linkedin.com/abhii199/"
+              href="https://www.linkedin.com/in/abhii199/" target='_blank'
               className="text-sm text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110 transform"
               >
               Linkedin
             </Link>
             <Link
-              href="https://github.com/abhii199"
+              href="https://github.com/abhii199" target='_blank'
               className="text-sm text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-110 transform"
               >
               GitHub
